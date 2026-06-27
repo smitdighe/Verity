@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .glass-card {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+  }
+
+  .glass-card-light {
+    background: rgba(255, 255, 255, 0.60);
+    box-shadow: 0 8px 32px rgba(30, 60, 120, 0.10);
+  }
+
+  .glass-card-dark {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40);
+  }
+
+  .glass-input-light {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+  }
+
+  .glass-input-dark {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-pill {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 9999px;
+  }
+
+  .glass-pill-light {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.70);
+  }
+
+  .glass-pill-dark {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .shimmer-light {
+    background: linear-gradient(90deg, #E2E8F0 25%, #F8FAFC 50%, #E2E8F0 75%);
+    background-size: 200% 100%;
+  }
+
+  .shimmer-dark {
+    background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
+    background-size: 200% 100%;
+  }
+}
+
+@layer utilities {
+  .text-primary-light {
+    color: #0D1B2E;
+  }
+
+  .text-secondary-light {
+    color: #4A6080;
+  }
+
+  .text-primary-dark {
+    color: #E8F0FA;
+  }
+
+  .text-secondary-dark {
+    color: #6B8AAA;
+  }
+
+  .bg-page-light {
+    background: linear-gradient(135deg, #DDE6F0 0%, #EEF2F7 50%, #E4ECF5 100%);
+  }
+
+  .bg-page-dark {
+    background: linear-gradient(135deg, #070C18 0%, #0A1020 100%);
+  }
+}
+
+.background-orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.background-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(100, 140, 200, 0.20);
+  filter: blur(100px);
+}
+
+html.dark .background-orb {
+  background: rgba(29, 78, 216, 0.18);
+}
+
+.background-orb-1 {
+  top: -220px;
+  left: -220px;
+  width: 680px;
+  height: 680px;
+}
+
+.background-orb-2 {
+  top: -180px;
+  right: -180px;
+  width: 560px;
+  height: 560px;
+}
+
+.background-orb-3 {
+  right: -240px;
+  bottom: -240px;
+  width: 700px;
+  height: 700px;
+}
+
+.background-orb-4 {
+  bottom: -160px;
+  left: -160px;
+  width: 440px;
+  height: 440px;
+}
