@@ -77,9 +77,9 @@ def extract_features(job_text: str, vectorizer) -> sp.csr_matrix:
             for w in [
                 "years of experience",
                 "year experience",
-                "experience required",
                 "experience in",
                 "experience with",
+                "minimum experience",
             ]
         )
         else 0

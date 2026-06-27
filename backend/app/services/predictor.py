@@ -19,7 +19,7 @@ def predict(
     """
     proba = model.predict_proba(X)[0]
     confidence = float(proba[1])
-    verdict = "SCAM" if confidence >= 0.5 else "LEGIT"
+    verdict = "SCAM" if confidence >= 0.4 else "LEGIT"
 
     if model_type == "Random Forest":
         X_dense = X.toarray()

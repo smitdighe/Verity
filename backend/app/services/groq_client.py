@@ -39,7 +39,7 @@ If it's a SCAM, warn them clearly. If it's LEGIT, reassure them but remind them 
         response = await client.chat.completions.create(
             model=settings.GROQ_MODEL,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=200,
+            max_tokens=400,
             temperature=0.4,
         )
 
