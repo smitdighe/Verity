@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -246,7 +247,13 @@ best_model, best_metrics = models[best_model_name]
 best_roc_auc = best_metrics["roc_auc"]
 
 print(f">>> Best model by ROC-AUC: {best_model_name} (ROC-AUC: {best_roc_auc:.4f})\n")
-
+print("Calibrating model probabilities...")
+calibrated_model = CalibratedClassifierCV(best_model, method='isotonic', cv=5)
+calibrated_model.fit(X_train, y_train)
+cal_proba = calibrated_model.predict_proba(X_test)[:, 1]
+cal_auc = roc_auc_score(y_test, cal_proba)
+print(f"Calibrated ROC-AUC: {cal_auc:.4f}\n")
+best_model = calibrated_model
 
 print("Setting up SHAP explainer...")
 
