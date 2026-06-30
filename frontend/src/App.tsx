@@ -37,7 +37,7 @@ export default function App() {
     setErrorMsg('');
 
     try {
-      const response = await fetch('https://verity-backend-vyrr.onrender.com', {
+      const response = await fetch('https://verity-backend-vyrr.onrender.com/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ job_text: text }),
