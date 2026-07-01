@@ -23,6 +23,20 @@
 
 ---
 
+## 🔍 How It Works
+
+```
+job text → TF-IDF + handcrafted features → LogisticRegression.predict_proba
+         → SHAP top-10 features → Groq LLM → plain-English verdict → JSON response
+```
+
+1. **Feature extraction** builds a 5010-dim sparse vector: 5000 TF-IDF features over `title + company_profile + description + requirements + benefits`, plus 4 structural booleans (salary range, company profile, required experience, employment type) and 6 keyword-flag features (run-commands, download/install, crypto, wire-transfer, urgency, deposit).
+2. **Prediction**: verdict is `SCAM` if `proba ≥ 0.4`.
+3. **SHAP**: top 10 features by `|shap_value|` returned with direction.
+4. **Groq**: top 5 SHAP features → 2-3 sentence explanation. Fails silently to `null` if Groq errors.
+
+---
+
 ## ✨ Features
 
 <table>
@@ -75,6 +89,21 @@
 | 📊 Explainability | SHAP | Feature-level reasoning per prediction |
 | 🧠 LLM | Groq API | Natural-language summary of the verdict |
 | ☁️ Hosting | Render (API) + Vercel (Web) | Deployment |
+
+---
+
+## 📊 Model
+
+Trained on the [EMSCAD "Real or Fake Job Postings" dataset](https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction) (~18k postings, ~5% fraudulent).
+
+| | |
+|---|---|
+| Algorithm | Logistic Regression (calibrated) |
+| Features | 5010 (5000 TF-IDF + 10 engineered) |
+| ROC-AUC | **0.9895** |
+| Explainability | SHAP (linear explainer) |
+
+Training script: `backend/ml_pipeline/train.py`. A Random Forest path exists in `predictor.py`'s SHAP branch for experimentation, but Logistic Regression is deployed.
 
 ---
 
@@ -176,10 +205,34 @@ npm run dev
 
 ---
 
+## 🔌 API
+
+`POST /analyze`
+
+```json
+// request
+{ "job_text": "string" }
+
+// response
+{
+  "verdict": "SCAM" | "LEGIT",
+  "confidence": 0.0,
+  "shap_features": [
+    { "feature_name": "string", "shap_value": 0.0, "direction": "SCAM" | "LEGIT" }
+  ],
+  "explanation": "string | null"
+}
+```
+
+`GET /health` — liveness check. Interactive docs at `/docs` when running locally.
+
+---
+
 ## ⚠️ Known Limitations
 - Render free tier: spins down after inactivity, can delay first request by 50s+
 - Model trained on a single labeled dataset — accuracy varies on out-of-distribution postings
 - No persistent storage for analysis history (stateless per request)
+- Backend URL hardcoded in `App.tsx` instead of env var
 
 ---
 
