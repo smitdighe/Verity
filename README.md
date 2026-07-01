@@ -19,6 +19,10 @@
 
 **Verity** is an ML-powered job posting fraud detector. Paste any job description and get an instant fraud verdict — backed by a real trained classifier (not just an LLM guess), with SHAP-based explainability and a Groq-powered natural-language breakdown of *why* a posting was flagged.
 
+<br />
+
+[![Verity Demo](https://img.youtube.com/vi/GSIWd9ddaiI/maxresdefault.jpg)](https://www.youtube.com/watch?v=GSIWd9ddaiI)
+
 </div>
 
 ---
